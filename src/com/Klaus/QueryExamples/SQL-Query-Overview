@@ -1,0 +1,45 @@
+SELECT
+ which columns to get back; '*' for all
+ TOP (first x results)
+ AS: to change the column name (Name AS CityName, ...)
+     also works without AS (Name CityName, ...)
+ DISTINCT returns only one even
+
+ - concat(String, String, ...) ... connects strings
+ - length() length of a String; digits of an int
+ - min() number: min, alphabetical first
+ - max() number: max, alphabetical last
+ - count() counts hits
+ - sum() sums up al values in Group
+ - avg() average
+ - substring(String, Startpos, Chars)
+
+
+FROM which table
+WHERE
+ <
+ >
+ <> not equal
+ = equal (also strings)
+ IN(String, String, String, ...) returns all that match the list
+ AND
+ OR
+ BETWEEN x AND y
+ LIKE () ... % is Wildcard
+ IS NULL
+ IS NOT NULL
+
+
+GROUP BY ... groups similar together
+ORDER BY
+ ASC ... ascending
+ DESC ... descending
+
+LIMIT (max number if hits) ... like TOP but for mySQL
+
+UNION ... get one result from 2 or more queries
+
+
+Questions:
+Difference DISTINCT and GROUP BY?
+
