@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS CarFactory;
 CREATE DATABASE CarFactory;
-use CarFactory;
+USE CarFactory;
 DROP TABLE IF EXISTS Car;
 CREATE TABLE Car (
 id int auto_increment primary key,
