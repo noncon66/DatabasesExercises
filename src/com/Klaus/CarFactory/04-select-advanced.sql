@@ -31,15 +31,23 @@ LIMIT 3;
 
 -- 2. Liste mit dem stärksten Auto pro Marke
 
-SELECT 
-    Car.brand AS Brand, 
-    Engine.power
+
+
+SELECT Car.brand, Car.type, Engine.name, Engine.type, Engine.power
 FROM
     Car_Engine
         JOIN
     Car ON Car.id = Car_Engine.CarId
         JOIN
     Engine ON Engine.id = Car_Engine.EngineId
-GROUP BY Brand
-HAVING MAX(power);
-
+JOIN (SELECT 
+		Car.brand AS Brand, 
+		MAX(Engine.power) AS maxPower
+	FROM
+    Car_Engine
+        JOIN
+    Car ON Car.id = Car_Engine.CarId
+        JOIN
+    Engine ON Engine.id = Car_Engine.EngineId
+GROUP BY Brand) MaxPowerList ON Car.Brand =  MaxPowerList.Brand
+WHERE Engine.power = MaxPowerList.maxPower; 
