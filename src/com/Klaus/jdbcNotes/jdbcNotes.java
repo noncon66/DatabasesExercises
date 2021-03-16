@@ -10,10 +10,28 @@ public class jdbcNotes {
 
 
     public static void main(String[] args) {
+        int userId = chooseUser();
         while (true) {
         printNotes();
         newNoteFromScanner();
         }
+    }
+
+    private static int chooseUser() {
+        int userId = 0;
+        printUsers();
+        //TODO choose User
+        //scanner input id (int)
+        //
+
+
+        return userId;
+    }
+
+    private static void printUsers() {
+        //TODO
+
+
     }
 
     private static void newNoteFromScanner() {
