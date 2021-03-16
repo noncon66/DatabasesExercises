@@ -1,0 +1,163 @@
+
+
+
+
+/*
+
+SELECT CountryCode, District, SUM(Population) SumPop, MIN(Population) MinPop, MAX(Population) MaxPop, avg(Population) AvgPop, COUNT(*) Cnt
+FROM world.city
+GROUP BY CountryCode, District
+ORDER BY District
+
+
+
+
+SELECT DISTINCT District
+FROM world.city
+WHERE CountryCode = 'DEU'
+ORDER BY District
+
+
+
+(SELECT Name, Population
+FROM world.city
+WHERE CountryCode = 'DEU'
+ORDER BY Population DESC
+LIMIT 3
+)
+UNION
+
+(SELECT Name, Population
+FROM world.city
+WHERE CountryCode = 'AUT'
+ORDER BY Population DESC
+LIMIT 3);
+
+
+
+
+SELECT *
+FROM world.city
+WHERE name like '%ork%';
+
+
+SELECT *
+FROM world.city
+WHERE name like '%ork';
+
+
+
+SELECT *
+FROM world.city
+WHERE name like 'Ka%'
+
+SELECT name, substring(name, 1, 3) shortName, substring(name, -3, 3) shortName2
+FROM world.city
+LIMIT 10;
+
+*/
+
+/*
+SELECT count(*) cnt, min(name) firstCityName, max(name) lastCityName
+FROM world.city
+WHERE CountryCode = 'AUT';
+
+
+
+SELECT name, length(name) len
+FROM world.city
+ORDER BY len DESC
+LIMIT 10;
+
+
+
+SELECT concat(name, ' - ', name) doppeltName
+FROM world.country
+LIMIT 10;
+
+
+SELECT CountryCode, name
+FROM world.city
+ORDER BY CountryCode ASC, Name DESC
+LIMIT 100;
+
+
+
+SELECT name, Population
+FROM world.city
+ORDER BY Population ASC
+LIMIT 10;
+
+
+
+SELECT name, Population
+FROM world.city
+ORDER BY Population DESC
+LIMIT 1;
+
+
+SELECT name, Population
+FROM world.city
+LIMIT 10;
+
+
+
+SELECT Population, Name CityName
+FROM world.city;
+
+
+SELECT Name CityName, Population
+FROM world.city;
+
+SELECT Name AS CityName, Population
+FROM world.city;
+
+
+SELECT Name, Population
+FROM world.city;
+
+
+
+SELECT *
+FROM world.city
+WHERE Population BETWEEN 10000 AND 50000;
+
+
+SELECT *
+FROM world.city
+WHERE CountryCode = 'AUT' AND Population < 10000000;
+
+
+SELECT *
+FROM world.city
+WHERE CountryCode = 'AFG' OR CountryCode = 'AUT' OR CountryCode = 'NLD';
+
+
+
+SELECT *
+FROM world.city
+WHERE CountryCode IN ('AFG', 'NLD', 'AUT');
+
+SELECT *
+FROM world.city
+WHERE District <> 'Kabol';
+
+SELECT *
+FROM world.city
+WHERE District = 'Kabol';
+
+SELECT *
+FROM world.city
+WHERE Population < 1000;
+
+SELECT *
+FROM world.city;
+
+*/
+
+/* Block comment */
+-- Line comment
+
+
+
+
