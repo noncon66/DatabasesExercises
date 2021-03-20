@@ -33,16 +33,28 @@ public class DynColumns {
 
     public static void printResult(ResultSet rs) throws SQLException {
         ResultSetMetaData md = rs.getMetaData();
+
         for (int i = 1; i <= md.getColumnCount(); i++) {
-            System.out.printf("%" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", md.getColumnLabel(i));
             //System.out.printf("%20s %20s %5d %10s %5d%n", md.getColumnLabel(i), md.getColumnName(i), md.getColumnDisplaySize(i), md.getColumnTypeName(i), md.getColumnType(i));
+            if (md.getColumnType(i) == Types.VARCHAR){
+                System.out.printf("%-" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", md.getColumnLabel(i));
+            } else {
+                System.out.printf("%" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", md.getColumnLabel(i));
+            }
+        }
+        System.out.println();
+        for (int i = 1; i <= md.getColumnCount(); i++) {
+            System.out.printf("%s |", "-".repeat(Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length())));
         }
         System.out.println();
 
         while (rs.next()) {
-
             for (int i = 1; i <= md.getColumnCount(); i++) {
-                System.out.printf("%" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", rs.getString(i));
+                if (md.getColumnType(i) == Types.VARCHAR){
+                    System.out.printf("%-" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", rs.getString(i));
+                } else {
+                    System.out.printf("%" + Math.max(md.getColumnDisplaySize(i), md.getColumnLabel(i).length()) + "s |", rs.getString(i));
+                }
 
                 //System.out.printf("%20s %20s %5d %10s %5d%n", md.getColumnLabel(i), md.getColumnName(i), md.getColumnDisplaySize(i), md.getColumnTypeName(i), md.getColumnType(i));
             }
