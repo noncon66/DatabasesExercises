@@ -1,11 +1,13 @@
 package com.Klaus.ATM;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.*;
 import java.util.Scanner;
 
 //Daniels Ansatz: Dataenbank interaktionen auslagern in eigene Klasse
 //Eigene Methode login (gibt Accountnumber zurück)
-
 
 
 public class Main {
@@ -17,11 +19,11 @@ public class Main {
 
         while (true) {
             boolean exit = false;
-
+            int accountnumber = 0;
             while (!exit) {
 
                 boolean isValidAccount = false;
-                int accountnumber = 0;
+
                 Scanner sc = new Scanner(System.in);
 
                 while (!isValidAccount) {
@@ -39,20 +41,33 @@ public class Main {
 
                 System.out.println("Account Balance: " + getAccountBalance(accountnumber));
 
-                System.out.println("Choose Type:");
-                System.out.println("1: withdrawl");
-                System.out.println("2: deposit");
-                System.out.println("3");
-                int type = sc.nextInt();
+                int type = askForAction(sc);
+                if (type == 4) exit = true;
+                while (type != 4) {
 
+                    System.out.println("Insert amount:");
+                    double amount = sc.nextDouble();
+                    executeTransaction(type, amount, accountnumber);
+                    type = askForAction(sc);
 
-                System.out.println("Insert amount:");
-                double amount = sc.nextDouble();
-
-                executeTransaction(type, amount, accountnumber);
+                }
+                exportTransactionsCsv(accountnumber, "export.csv");
+                System.out.println("Vielen Dank! Auf Wiedersehen!");
+                System.out.println();
 
             }
         }
+    }
+
+
+    private static int askForAction(Scanner sc) {
+        System.out.println("Choose Type:");
+        System.out.println("1: withdrawl");
+        System.out.println("2: deposit");
+        System.out.println("3: export");
+        System.out.println("4: exit");
+        int type = sc.nextInt();
+        return type;
     }
 
     private static void executeTransaction(int type, double amount, int accountnumber) {
@@ -134,4 +149,52 @@ public class Main {
         }
         return isValid;
     }
+
+    private static void exportTransactionsCsv(int accountnumber, String filename) {
+        Connection conn = null;
+        ResultSet rs = null;
+        try {
+
+            conn = DriverManager.getConnection(url, usr, pwd);
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM transactions WHERE accountnumber = ?");
+            ps.setInt(1, accountnumber);
+            rs = ps.executeQuery();
+            var rsmd = rs.getMetaData();
+
+            //header
+            Writer writer = new FileWriter(filename);
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                writer.append(rsmd.getColumnName(i));
+                if (i != rsmd.getColumnCount()) {
+                    writer.append(";");
+                }
+            }
+
+            //body
+            while (rs.next())
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    writer.append(rs.getString(i));
+                    if (i != rsmd.getColumnCount()) {
+                        writer.append(";");
+                    }
+                }
+
+
+    } catch(SQLException |
+    IOException throwables)
+
+    {
+        throwables.printStackTrace();
+    } finally
+
+    {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+}
 }
